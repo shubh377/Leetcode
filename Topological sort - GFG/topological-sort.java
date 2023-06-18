@@ -64,33 +64,74 @@ class Solution
     static int[] topoSort(int V, ArrayList<ArrayList<Integer>> adj) 
     {
         // add your code here
-        boolean[] vis=new boolean[V];
-        Stack<Integer> st=new Stack<>();
+        // boolean[] vis=new boolean[V];
+        // Stack<Integer> st=new Stack<>();
         
-        for (int i=0;i<V;i++){
-            if (!vis[i]){
-                 dfs(i,adj,st,vis);
+        // for (int i=0;i<V;i++){
+        //     if (!vis[i]){
+        //          dfs(i,adj,st,vis);
+        //     }
+        // }
+        // int arr[]=new int[V];
+        // while (st.empty()!=true){
+        //     for (int i=0;i<V;i++){
+        //         arr[i]=st.pop();
+        //     }
+        //}
+        //return arr;
+        
+        int[] indeg=new int[V];
+        for ( ArrayList<Integer> ans: adj){
+            for (int e: ans){
+                indeg[e]++;
             }
         }
-        int arr[]=new int[V];
-        while (st.empty()!=true){
-            for (int i=0;i<V;i++){
-                arr[i]=st.pop();
-            }
+        ArrayList<Integer> temp=new ArrayList<>();
+        
+        bfs(V,adj,indeg,temp);
+        int j=0;
+        int[] arr=new int[V];
+        for (int i: temp){
+            arr[j]=i;
+            j++;
         }
         return arr;
         
+        
     }
     
-    public static void dfs(int v,ArrayList<ArrayList<Integer>> adj,Stack<Integer> st,boolean[] vis){
+    public static void bfs(int v, ArrayList<ArrayList<Integer>> adj, int[] indeg,ArrayList<Integer> temp){
         
-        vis[v]=true;
+        Queue<Integer> q=new ArrayDeque<>();
         
-        for (Integer nbr: adj.get(v)){
-            if (!vis[nbr]){
-                dfs(nbr,adj,st,vis);
+        for (int i=0;i<v;i++){
+            if (indeg[i]==0){
+                q.add(i);
             }
         }
-        st.push(v);
+        
+        while (q.size()>0){
+            
+            int curr=q.poll();
+            temp.add(curr);
+            
+            for (int nbr: adj.get(curr)){
+                if (--indeg[nbr]==0){
+                    q.add(nbr);
+                }
+            }
+        }
     }
+    
+    // public static void dfs(int v,ArrayList<ArrayList<Integer>> adj,Stack<Integer> st,boolean[] vis){
+        
+    //     vis[v]=true;
+        
+    //     for (Integer nbr: adj.get(v)){
+    //         if (!vis[nbr]){
+    //             dfs(nbr,adj,st,vis);
+    //         }
+    //     }
+    //     st.push(v);
+    // }
 }
