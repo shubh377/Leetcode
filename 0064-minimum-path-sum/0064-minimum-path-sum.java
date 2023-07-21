@@ -4,8 +4,7 @@ class Solution {
         int m=grid[0].length;
         
         int[][] dp=new int[n][m];
-        int r=n-1;
-        int c=m-1;
+        
         
         for (int i=n-1;i>=0;i--){
             for (int j=m-1;j>=0;j--){
