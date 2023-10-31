@@ -1,28 +1,23 @@
 class Solution {
     public void rotate(int[] nums, int k) {
-        if (nums.length<=1){
-            return;
-        }
         
-        int steps=k%nums.length;
+        k%=nums.length;
+        reverse(nums,0,nums.length-1);
+        reverse(nums,0,k-1);
+        reverse(nums,k,nums.length-1);
+    }
+    
+    
+    public void reverse(int[] nums,int start,int end){
         
-        int gcd=findgcd(nums.length,steps);
-        int position,count;
-        
-        for (int i=0;i<gcd;i++){
-            position=i;count=nums.length/gcd-1;
-            
-            for (int j=0;j<count;j++){
-                position=(position+steps)%nums.length;
-                
-                nums[i]^=nums[position];
-                nums[position]^=nums[i];
-                nums[i] ^=nums[position];
-            }
+        while (start<=end){
+            int t=nums[start];
+            nums[start]=nums[end];
+            nums[end]=t;
+            start++;
+            end--;
         }
     }
     
-    public int findgcd(int a,int b){
-        return (a==0 || b==0) ? a+b: findgcd(b,a%b);
-    }
+    
 }
