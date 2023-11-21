@@ -1,20 +1,19 @@
 class Solution {
     
-        public int gcd(int a,int b)
-    {
-        if(b==0)
-        return a;
-
-        return gcd(b,a%b);
-    }
     public String gcdOfStrings(String str1, String str2) 
     {
-        String s=str1+str2;
-        if(!s.equals(str2+str1))return "";
-
-        return str1.substring(0,gcd(str1.length(),str2.length()));
-
+        if (str1.length()<str2.length()){
+            return gcdOfStrings(str2,str1);
+        }
         
+        if (str1.equals(str2)){
+            return str1;
+        }
         
+        if (str1.startsWith(str2)){
+            return gcdOfStrings(str1.substring(str2.length()),str2);
+        }
+        
+        return "";
     }
 }
